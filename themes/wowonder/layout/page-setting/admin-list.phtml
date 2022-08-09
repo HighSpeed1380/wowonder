@@ -1,0 +1,31 @@
+<div class="col-md-4">
+	<div class="profile-style promoted-style page_admin_list" id="member-<?php echo $wo['member']['user_id'] ?>" >
+		<div class="avatar">
+			<a href="<?php echo $wo['member']['url'];?>" data-ajax="?link1=timeline&u=<?php echo $wo['member']['username']?>">
+				<img src="<?php echo $wo['member']['avatar'];?>" alt="<?php echo $wo['member']['name']; ?> Profile Picture" />
+			</a>
+		</div>
+		
+		<h6>
+			<a href="<?php echo $wo['member']['url'];?>" data-ajax="?link1=timeline&u=<?php echo $wo['member']['username']?>"><?php echo $wo['member']['name']; ?></a>
+		</h6>
+   
+		<div class="page-website">
+			<?php echo Wo_UserStatus($wo['member']['user_id'],$wo['member']['lastseen']); ?>
+		</div>
+		
+		<div class="foot">
+			<button type="button" onclick="Wo_AddPageAdmin(<?php echo $wo['member']['user_id'];?>, <?php echo $wo['member']['page_id'];?>,this)" class="btn btn-default btn-sm btn-mat">
+				<?php if (Wo_IsPageAdminExists($wo['member']['user_id'],$wo['member']['page_id'])): ?>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+				<?php else: ?>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
+				<?php endif; ?>
+				<span class="button-text"> <?php echo $wo['lang']['admin'];?></span>
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-mat" id="privileges_admin_page_<?php echo($wo['member']['user_id']) ?>" style="<?php echo Wo_IsPageAdminExists($wo['member']['user_id'],$wo['member']['page_id']) ? '' : 'display: none;'; ?>">
+				<a href="<?php echo Wo_SeoLink('index.php?link1=page-setting&page=' . $wo['member']['page_name'] . '&link3=admins');?>?name=<?php echo $wo['member']['username']?>"  data-ajax="?link1=page-setting&page=<?php echo $wo['member']['page_name'];?>&link3=admins&name=<?php echo $wo['member']['username']?>"><?php echo $wo['lang']['privileges'];?></a>
+			</button>
+		</div>
+	</div>
+</div>

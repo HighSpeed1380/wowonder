@@ -1,0 +1,64 @@
+<div class="modal fade" id="SelectProModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Pro Package</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+				<p>Please choose for which package you want this feature to be enabled</p>
+                <div id="SelectProModalAlert"></div>
+                <form class="SelectProModalForm" method="POST">
+					<div class="row mx-n2">
+						<?php foreach ($wo["pro_packages"] as $key => $value) { ?>
+							<div class="col-sm-6 px-2">
+								<label class="plan_name_prnt">
+									<input type="hidden" name="pro_<?php echo $value['id']; ?>" value="0">
+									<input type="checkbox" name="pro_<?php echo $value['id']; ?>" id="pro_<?php echo $value['id']; ?>-enabled" value="1" <?php echo ($value[$wo['feature_type']] == 1) ? 'checked': '';?>>
+									<div class="plan_name" style="
+										<?php if ($value['id'] == 1) { ?>
+											color:<?php echo !empty($value['color']) ? $value['color'] : '#4c7737' ?>
+										<?php }elseif ($value['id'] == 2) { ?>
+											color:<?php echo !empty($value['color']) ? $value['color'] : '#ffbb42' ?>
+										<?php }elseif ($value['id'] == 3) { ?>
+											color:<?php echo !empty($value['color']) ? $value['color'] : '#e13c4c' ?>
+										<?php }elseif ($value['id'] == 4) { ?>
+											color:<?php echo !empty($value['color']) ? $value['color'] : '#3f4bb8' ?>
+										<?php } ?>
+									"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg>
+										<div class="icon">
+											<?php if (!empty($value['image']) || !empty($value['night_image'])) { ?>
+												<img src="<?php echo(!empty($value['image']) ? $value['image'] : $value['night_image']) ?>" class="pro_packages_icon_inline">
+											<?php }elseif ($value['id'] == 1) { ?>
+												<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg></span>
+											<?php }elseif ($value['id'] == 2) { ?>
+												<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11.71,19C9.93,19 8.5,17.59 8.5,15.86C8.5,14.24 9.53,13.1 11.3,12.74C13.07,12.38 14.9,11.53 15.92,10.16C16.31,11.45 16.5,12.81 16.5,14.2C16.5,16.84 14.36,19 11.71,19M13.5,0.67C13.5,0.67 14.24,3.32 14.24,5.47C14.24,7.53 12.89,9.2 10.83,9.2C8.76,9.2 7.2,7.53 7.2,5.47L7.23,5.1C5.21,7.5 4,10.61 4,14A8,8 0 0,0 12,22A8,8 0 0,0 20,14C20,8.6 17.41,3.8 13.5,0.67Z"></path></svg></span>
+											<?php }elseif ($value['id'] == 3) { ?>
+												<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7,2V13H10V22L17,10H13L17,2H7Z"></path></svg></span>
+											<?php }elseif ($value['id'] == 4) { ?>
+												<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2.81,14.12L5.64,11.29L8.17,10.79C11.39,6.41 17.55,4.22 19.78,4.22C19.78,6.45 17.59,12.61 13.21,15.83L12.71,18.36L9.88,21.19L9.17,17.66C7.76,17.66 7.76,17.66 7.05,16.95C6.34,16.24 6.34,16.24 6.34,14.83L2.81,14.12M5.64,16.95L7.05,18.36L4.39,21.03H2.97V19.61L5.64,16.95M4.22,15.54L5.46,15.71L3,18.16V16.74L4.22,15.54M8.29,18.54L8.46,19.78L7.26,21H5.84L8.29,18.54M13,9.5A1.5,1.5 0 0,0 11.5,11A1.5,1.5 0 0,0 13,12.5A1.5,1.5 0 0,0 14.5,11A1.5,1.5 0 0,0 13,9.5Z"></path></svg></span>
+											<?php } ?>
+										</div>
+										<div class="name">
+											<?php echo $value['name'] ?>
+										</div>
+									</div>
+								</label>
+							</div>
+						<?php } ?>
+					</div>
+                    <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    <input type="hidden" name="feature_type" value="<?php echo $wo['feature_type'];?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" onclick="Wo_SubmitSelectProForm(this);" class="btn btn-primary waves-effect" id="Select_pro_btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
